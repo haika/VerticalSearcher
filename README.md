@@ -1,0 +1,2 @@
+# VerticalSearcher
+基本的垂直搜索引擎，实现了基本的网络爬虫功能以及用Luence实现检索
