@@ -12,8 +12,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import utils.MySQL;
+import java.util.concurrent.Callable;
 
-public class Download extends Thread {
+
+public class Download implements Callable<Boolean> {
 
 	private MaintainLinks maintainQueue = new MaintainLinks();
 	private Db db = new Db();
@@ -35,7 +37,7 @@ public class Download extends Thread {
 	}
 
 	@Override
-	public void run() {
+	public Boolean call() throws Exception {
 		while (!maintainQueue.isWaitEmpty()) {
 
 			maintainQueue.addWait(cachedWait);
@@ -58,6 +60,7 @@ public class Download extends Thread {
 		db.commit();
 		db.finalise();
 		maintainQueue.persistence();
+		return true;
 	}
 
 	// private HashSet<String> cachedSuccess = new HashSet<String>();
